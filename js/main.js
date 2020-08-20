@@ -19,6 +19,7 @@ window.addEventListener('scroll', () => {
     const currentScroll = window.pageYOffset;
     if (currentScroll < 0.01) {
         body.classList.remove('scroll-up');
+        body.classList.remove('scroll-down');
         return;
     }
 
@@ -315,12 +316,11 @@ function like() {
         }]).then(function () {
             alert('You like it!');
         }).catch(function (error) {
-            alert('Oops, there\'s an error!');
+            alert('Oops, ' + error);
         });
     }
 }
 
 function handleGeneralError(error) {
-    alert(error.message + '\nCheck yout internet connection and refresh the page!'
-        || 'Internal Server' + '\nCheck yout internet connection and refresh the page!');
+    alert(error.message);
 }

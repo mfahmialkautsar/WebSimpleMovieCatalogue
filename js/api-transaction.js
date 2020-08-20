@@ -1,6 +1,6 @@
 const MOVIE_DB_ENDPOINT = 'https://api.themoviedb.org';
 const MOVIE_DB_IMAGE_ENDPOINT = 'https://image.tmdb.org/t/p/w500';
-const MOVIE_DB_API = '61462e20daa2cbc48640e10a2a152d31';
+const MOVIE_DB_API = 'YOUR_MOVIE_DB_API_GOES_HERE';
 
 function requestMovies(url, onComplete, onError) {
     fetch(url)
