@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=dge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/public/css/style.css" />
+    <title>Movie Catalogue</title>
+</head>
+
+<body>
+    <header id="header">
+    </header>
+    <main class="container">
+        <div class="container-movies">
+            <div class="movie">
+                <h3 class="placeholder title-placeholder"></h3>
+                <div class="section">
+                    <div class="imageContainer"></div>
+                    <div class="imageContainer"></div>
+                    <div class="imageContainer"></div>
+                    <div class="imageContainer"></div>
+                    <div class="imageContainer"></div>
+                    <div class="imageContainer"></div>
+                    <div class="imageContainer"></div>
+                    <div class="imageContainer"></div>
+                    <div class="imageContainer"></div>
+                    <div class="imageContainer"></div>
+                    <div class="imageContainer"></div>
+                    <div class="imageContainer"></div>
+                    <div class="imageContainer"></div>
+                    <div class="imageContainer"></div>
+                    <div class="imageContainer"></div>
+                    <div class="imageContainer"></div>
+                    <div class="imageContainer"></div>
+                    <div class="imageContainer"></div>
+                    <div class="imageContainer"></div>
+                    <div class="imageContainer"></div>
+                </div>
+            </div>
+        </div>
+        <div id="container-footer">
+            <button id="prev-page" class="page-control" style="display: none">&#10094;</button>
+            <input id="page-input" class="page-number" placeholder="0"
+                onclick="this.setSelectionRange(0, this.value.length)" value="0" /> /
+            <div id="total-pages" class="page-number">0</div>
+            <button id="next-page" class="page-control" style="display: none">&#10095;</button>
+        </div>
+    </main>
+    <footer></footer>
+
+    <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+    <script type="module" src="/public/js/app.js"></script>
+</body>
+
+</html>
