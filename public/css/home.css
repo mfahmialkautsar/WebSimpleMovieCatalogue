@@ -1,187 +1,187 @@
 ul,
 li {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+	list-style: none;
+	margin: 0;
+	padding: 0;
 }
 
 .carousel img {
-    width: 100%;
-    min-height: 35vw;
-    max-height: 100vh;
-    object-fit: cover;
-    border-radius: 8px;
+	width: 100%;
+	min-height: 35vw;
+	max-height: 100vh;
+	object-fit: cover;
+	border-radius: 8px;
 }
 
 .title {
-    font-weight: 500;
-    bottom: 0;
-    width: 100%;
-    padding: 16px;
-    background: linear-gradient(
-        0deg,
-        rgba(0, 0, 0, 0.9) 0%,
-        rgba(0, 0, 0, 0.49631190366771705) 61%,
-        rgba(0, 0, 0, 0) 100%
-    );
+	font-weight: 500;
+	bottom: 0;
+	width: 100%;
+	padding: 16px;
+	background: linear-gradient(
+		0deg,
+		rgba(0, 0, 0, 0.9) 0%,
+		rgba(0, 0, 0, 0.49631190366771705) 61%,
+		rgba(0, 0, 0, 0) 100%
+	);
 }
 
 /* Slideshow container */
 .carousel {
-    /* max-width: 1000px; */
-    position: relative;
-    margin: auto;
+	/* max-width: 1000px; */
+	position: relative;
+	margin: auto;
 }
 
 .carousel h2 {
-    margin-bottom: 24px;
+	margin-bottom: 24px;
 }
 
 .carousel__viewport {
-    position: relative;
+	position: relative;
 }
 
 /* Hide the images by default */
 .carousel__slide {
-    display: none;
+	display: none;
 }
 
 /* Next & previous buttons */
 .prev,
 .next {
-    cursor: pointer;
-    position: absolute;
-    top: 0;
-    height: 100%;
-    width: auto;
-    padding: 16px;
-    color: white;
-    font-weight: bold;
-    font-size: 18px;
-    transition: 0.6s ease;
-    border-radius: 0 3px 3px 0;
-    user-select: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+	cursor: pointer;
+	position: absolute;
+	top: 0;
+	height: 100%;
+	width: auto;
+	padding: 16px;
+	color: white;
+	font-weight: bold;
+	font-size: 18px;
+	transition: 0.6s ease;
+	border-radius: 0 3px 3px 0;
+	user-select: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 /* Position the "next button" to the right */
 .next {
-    right: 0;
+	right: 0;
 }
 
 /* On hover, add a black background color with a little bit see-through */
 .prev:hover {
-    background: linear-gradient(
-        -90deg,
-        rgba(0, 0, 0, 0.01) 0%,
-        rgba(0, 0, 0, 0.1) 100%,
-        rgba(0, 0, 0, 0) 100%
-    );
+	background: linear-gradient(
+		-90deg,
+		rgba(0, 0, 0, 0.01) 0%,
+		rgba(0, 0, 0, 0.1) 100%,
+		rgba(0, 0, 0, 0) 100%
+	);
 }
 
 .next:hover {
-    background: linear-gradient(
-        90deg,
-        rgba(0, 0, 0, 0.01) 0%,
-        rgba(0, 0, 0, 0.1) 100%,
-        rgba(0, 0, 0, 0) 100%
-    );
+	background: linear-gradient(
+		90deg,
+		rgba(0, 0, 0, 0.01) 0%,
+		rgba(0, 0, 0, 0.1) 100%,
+		rgba(0, 0, 0, 0) 100%
+	);
 }
 
 .carousel__navigation-list {
-    position: absolute;
-    bottom: 0;
-    padding-bottom: 2px;
-    left: 50%;
+	position: absolute;
+	bottom: 0;
+	padding-bottom: 2px;
+	left: 50%;
 }
 
 .carousel__navigation-list ul {
-    position: relative;
-    margin: 0;
-    left: -50%;
+	position: relative;
+	margin: 0;
+	left: -50%;
 }
 
 .carousel__slide .title {
-    position: absolute;
-    font-size: larger;
-    color: var(--color-font-primary);
+	position: absolute;
+	font-size: larger;
+	color: var(--color-font-primary);
 }
 
 /* The dots/bullets/indicators */
 .dot {
-    cursor: pointer;
-    height: 3px;
-    width: 24px;
-    margin: 0 3px;
-    background-color: #bbb !important;
-    border-radius: 20%;
-    display: inline-block;
-    transition: background-color 0.6s ease;
+	cursor: pointer;
+	height: 3px;
+	width: 24px;
+	margin: 0 3px;
+	background-color: #bbb !important;
+	border-radius: 20%;
+	display: inline-block;
+	transition: background-color 0.6s ease;
 }
 
 .active,
 .dot:hover {
-    background-color: #717171 !important;
+	background-color: #717171 !important;
 }
 
 /* Fading animation */
 .myfade {
-    -webkit-animation-name: fade;
-    -webkit-animation-duration: 1.5s;
-    animation-name: fade;
-    animation-duration: 1.5s;
+	-webkit-animation-name: fade;
+	-webkit-animation-duration: 1.5s;
+	animation-name: fade;
+	animation-duration: 1.5s;
 }
 
 @-webkit-keyframes fade {
-    from {
-        opacity: 0.4;
-    }
-    to {
-        opacity: 1;
-    }
+	from {
+		opacity: 0.4;
+	}
+	to {
+		opacity: 1;
+	}
 }
 
 @keyframes fade {
-    from {
-        opacity: 0.4;
-    }
-    to {
-        opacity: 1;
-    }
+	from {
+		opacity: 0.4;
+	}
+	to {
+		opacity: 1;
+	}
 }
 
 .imageContainer:nth-child(n + 7) {
-    display: none;
+	display: none;
 }
 
 @media only screen and (max-width: 1199px) {
-    .imageContainer:nth-child(n + 6) {
-        display: none;
-    }
+	.imageContainer:nth-child(n + 6) {
+		display: none;
+	}
 }
 
 @media only screen and (max-width: 991px) {
-    .imageContainer:nth-child(n + 5) {
-        display: none;
-    }
+	.imageContainer:nth-child(n + 5) {
+		display: none;
+	}
 }
 
 @media only screen and (max-width: 767px) {
-    .imageContainer:nth-child(n + 4) {
-        display: none;
-    }
+	.imageContainer:nth-child(n + 4) {
+		display: none;
+	}
 }
 
 @media only screen and (max-width: 524px) {
-    .imageContainer:nth-child(n + 3) {
-        display: none;
-    }
+	.imageContainer:nth-child(n + 3) {
+		display: none;
+	}
 }
 
 @media only screen and (max-width: 359px) {
-    .imageContainer:nth-child(n + 2) {
-        display: none;
-    }
+	.imageContainer:nth-child(n + 2) {
+		display: none;
+	}
 }

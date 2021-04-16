@@ -1,6 +1,8 @@
 # MovieCatalogue-LIFF
-Basically the same as my android The Movie Catalogue, but you can run this on any browser you have on your phone and computer.
-And if you login with your LINE Messenger account, you can get Watchlist feature. This can be happened with the help of LIFF (LINE Front-end Framework).
+Basically the same as my android [The Movie Catalogue](https://github.com/mfahmialkautsar/TheMovieCatalogue), but you can run this on any browser you have on your phone and computer.
+And if you login with your [LINE Messenger](https://line.me) account, you can get Watchlist feature. This can be happened with the help of LIFF ([LINE Front-end Framework](https://developers.line.biz/console)).
+
+Just a try and error app. No framework. Clean Node.js and some small packages only.
 
 ## Screenshot
 <img src="./screenshots/computer_films.png" title="Films (Computer)">&nbsp;
@@ -18,11 +20,12 @@ And if you login with your LINE Messenger account, you can get Watchlist feature
 https://liff.line.me/1653723806-zZml2obV (or you can access https://liffmovie.herokuapp.com)
 
 ### Configuration
-- `MOVIE_DB_API` at `index.js`: Your TMDB API key
-- `LIFFID` at `index.js`: From LINE Developers
+- `DATABASE_URL` at `db.js`: PostgreSQL database url
+- `MOVIE_DB_API` at `web.js`: Your TMDB API key
+- `LIFF_ID` at `web.js`: From LINE Developers
 - Endpoint URL at LIFF LINE Developers: Your domain
 
-### Licenses
+### Technologies
 - [TMDB](https://developers.themoviedb.org/3)
 - [LINE Front-end Framework SDK](https://developers.line.biz/en/docs/liff/)
 - [Node.js](https://nodejs.org/en/docs/)

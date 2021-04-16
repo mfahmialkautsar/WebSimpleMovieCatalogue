@@ -1,8 +1,8 @@
 {
   "name": "moviecatalogue",
   "version": "1.0.0",
-  "description": "A simple movie catalogue",
-  "main": "./index.js",
+  "description": "A LIFF movie catalogue",
+  "main": "index.js",
   "dependencies": {
     "node-fetch": "^2.6.1",
     "pg": "^8.4.1"
@@ -10,6 +10,9 @@
   "devDependencies": {},
   "scripts": {
     "start": "node index.js",
+    "local": "npm run env npm start",
+    "watch": "npm run env nodemon",
+    "env": "",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
