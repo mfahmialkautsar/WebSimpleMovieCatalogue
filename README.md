@@ -20,6 +20,7 @@ Just a try and error app. No framework. Clean Node.js and some small packages on
 https://liff.line.me/1653723806-zZml2obV (or you can access https://liffmovie.herokuapp.com)
 
 ### Configuration
+- Run `npm i`
 - `DATABASE_URL` at `db.js`: PostgreSQL database url
 - `MOVIE_DB_API` at `web.js`: Your TMDB API key
 - `LIFF_ID` at `web.js`: From LINE Developers
