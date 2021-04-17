@@ -4,7 +4,7 @@ let liffProfile;
 let liffStarted = false;
 startLiff();
 
-async function startLiff() {
+function startLiff() {
 	liffStarted = true;
 	const useNodeJS = true; // if you are not using a node server, set this value to false
 
@@ -14,14 +14,16 @@ async function startLiff() {
 	// if node is used, fetch the environment variable and pass it to the LIFF method
 	// otherwise, pass defaultLiffId
 	if (useNodeJS) {
-		await fetch('/send-id')
+		fetch('/send-id')
 			.then(function (reqResponse) {
 				return reqResponse.json();
 			})
-			.then(async function (jsonResponse) {
+			.then(jsonResponse => {
 				myLiffId = jsonResponse.id;
-				await initializeLiffOrDie(myLiffId);
-				if (location.search.match(/\/?code=.+/)) {
+				initializeLiffOrDie(myLiffId);
+			})
+			.then(() => {
+				if (location.search.match(/\/?\?code=.+/)) {
 					alert(
 						"If you've just tried to log in and haven't logged in yet (it's a bug from LINE), just log in again.\nElse, ignore this message."
 					);
@@ -31,7 +33,7 @@ async function startLiff() {
 				liffStarted = false;
 			});
 	} else {
-		await initializeLiffOrDie(myLiffId);
+		initializeLiffOrDie(myLiffId);
 	}
 }
 
@@ -40,9 +42,9 @@ async function startLiff() {
  * @param {string} myLiffId The LIFF ID of the selected element
  */
 
-async function initializeLiffOrDie(myLiffId) {
+function initializeLiffOrDie(myLiffId) {
 	if (myLiffId) {
-		await initializeLiff(myLiffId);
+		initializeLiff(myLiffId);
 	}
 }
 
@@ -50,14 +52,14 @@ async function initializeLiffOrDie(myLiffId) {
  * Initialize LIFF
  * @param {string} myLiffId The LIFF ID of the selected element
  */
-async function initializeLiff(myLiffId) {
-	await liff
+function initializeLiff(myLiffId) {
+	liff
 		.init({
 			liffId: myLiffId,
 		})
-		.then(async () => {
+		.then(() => {
 			// start to use LIFF's api
-			await initializeApp();
+			initializeApp();
 		})
 		.catch((err) => {});
 }
@@ -68,9 +70,10 @@ async function initializeLiff(myLiffId) {
 async function initializeApp() {
 	// check if the user is logged in/out, and disable inappropriate button
 	if (liff.isLoggedIn()) {
-		liffProfile = await liff.getProfile();
+		liffProfile = await liff.getProfile()
 		setupProfile();
 	} else {
+		liffProfile = {};
 		const loginButton = document.getElementById('login');
 		loginButton.innerHTML =
 			'<div id="loginButton" class="btn nodecor-link">Login</div>';
@@ -88,7 +91,7 @@ function registerButtonHandlers() {
 			.addEventListener('click', function () {
 				if (liff.isLoggedIn()) {
 					liff.logout();
-					window.location.reload();
+					window.location = "/";
 				} else {
 					liff.login();
 				}
@@ -143,7 +146,9 @@ async function getProfile() {
 	try {
 		if (!liffProfile) {
 			if (!liffStarted) {
-				await startLiff();
+				startLiff();
+				await sleep(500);
+				return getProfile();
 			} else {
 				await sleep(500);
 				return getProfile();

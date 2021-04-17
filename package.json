@@ -1,13 +1,11 @@
 {
   "name": "moviecatalogue",
   "version": "1.0.0",
-  "description": "A LIFF movie catalogue",
+  "description": "A LIFF Movie Catalogue",
   "main": "index.js",
   "dependencies": {
-    "node-fetch": "^2.6.1",
     "pg": "^8.4.1"
   },
-  "devDependencies": {},
   "scripts": {
     "start": "node index.js",
     "local": "npm run env npm start",

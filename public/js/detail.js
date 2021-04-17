@@ -9,15 +9,13 @@ let gettingWL = false;
 const watchlistedIcon = 'fa-bookmark';
 const unwatchlistedIcon = 'fa-bookmark-o';
 
-async function getDetailMovie() {
+function getDetailMovie() {
 	let movieId;
 	const reqArray = location.pathname.replace(/\/$/, '').split('/');
 	movieId = reqArray[reqArray.length - 1];
 
-	fetch(
-		(await generateDetailFilmUrl(filmCategory, movieId)) +
-			'&append_to_response=credits,videos'
-	)
+	generateDetailFilmUrl(filmCategory, movieId)
+		.then((res) => fetch(res + '&append_to_response=credits,videos'))
 		.then((response) => response.json())
 		.then((film) => {
 			if (film.status_code) {
@@ -283,12 +281,15 @@ function getReleaseDate(data, day = true) {
 }
 
 async function getWL(film) {
+	const profile = await getProfile();
+	const profileId = profile.userId;
+	if (!profileId) return;
 	gettingWL = true;
 	try {
 		const btnWatchlist = document.getElementById('btn-watchlist');
 
 		const body = {
-			lineUId: (await getProfile()).userId,
+			lineUId: profileId,
 			filmId: film.id,
 		};
 
@@ -314,13 +315,16 @@ async function getWL(film) {
 }
 
 async function watchlist(film) {
+	const profile = await getProfile();
+	const profileId = profile.userId;
+	const profileName = profile.displayName;
+	if (!profileId) return;
 	try {
 		if (!gettingWL) {
 			gettingWL = true;
-			const profile = await getProfile();
 			const body = {
-				lineUId: profile.userId,
-				name: profile.displayName,
+				lineUId: profileId,
+				name: profileName,
 				movie: film,
 			};
 			const response = await fetch('/addWL', {

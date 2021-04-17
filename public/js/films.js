@@ -72,25 +72,34 @@ function createSectionHeader(title) {
 	return header;
 }
 
-async function renderFilms(i = 0, data) {
+function renderFilms(i = 0, data) {
 	moviesContainers[i].innerHTML = '';
-	if (popular && (!page || page == 1)) {
-		document
-			.querySelector('.container-movies')
-			.appendChild(await createGenresShow());
-	}
+	if (popular && (!page || page == 1)) createGenresShow();
 	const moviesBlock = generateMoviesBlock(data);
 	const header = createSectionHeader(this.title);
 	moviesBlock.insertBefore(header, moviesBlock.firstChild);
-	searchCategory
-		? moviesBlock.insertBefore(
-				searchCategory,
-				moviesBlock.firstChild.nextSibling
-		  )
-		: null;
+	searchCategory &&
+		moviesBlock.insertBefore(
+			searchCategory,
+			moviesBlock.firstChild.nextSibling
+		);
 	moviesContainers[i].appendChild(moviesBlock);
 
 	goToPage(data);
+
+	const activeButton = document.getElementById('search-' + filmCategory);
+	if (activeButton) {
+		activeButton.style.backgroundColor = '#010101';
+		activeButton.disabled = true;
+		document.getElementById('search-movie').onclick = function (e) {
+			e.preventDefault();
+			searchFilms('movie', query);
+		};
+		document.getElementById('search-tv').onclick = function (e) {
+			e.preventDefault();
+			searchFilms('tv', query);
+		};
+	}
 }
 
 function nextPage() {
@@ -139,18 +148,12 @@ function goToPage(data) {
 
 		prevPageButton.onclick = function (event) {
 			event.preventDefault();
-			if (page >= 2) {
-				page--;
-				jumpToPage();
-			}
+			prevPage();
 		};
 
 		nextPageButton.onclick = function (event) {
 			event.preventDefault();
-			if (page < totalPages) {
-				page++;
-				jumpToPage();
-			}
+			nextPage();
 		};
 
 		const prevButtonStyle = prevPageButton.style;
@@ -195,64 +198,66 @@ function createMovieContainer(section) {
 	return movieElement;
 }
 
-async function getGenreName(id) {
+function getGenreName(id, completion) {
 	let genreName = '';
-	await getGenre(filmCategory);
-	let listGenre = movieGenre;
-	if (filmCategory == 'tv') {
-		listGenre = tvGenre;
-	}
-	listGenre.forEach((genre) => {
-		if (genre.id == id) {
-			genreName = genre.name;
+	getGenre(filmCategory).then(() => {
+		let listGenre = movieGenre;
+		if (filmCategory == 'tv') {
+			listGenre = tvGenre;
+		}
+		listGenre.forEach((genre) => {
+			if (genre.id == id) {
+				genreName = genre.name;
+			}
+		});
+		completion(genreName);
+	});
+}
+
+function getWatchlist() {
+	document.getElementById('container-footer').style.display = 'none';
+	getProfile().then((profile) => {
+		if (profile.userId) {
+			getWatchlistMovies(renderFilms, profile.userId);
+		} else {
+			renderFilms();
 		}
 	});
-	return genreName;
 }
 
-async function getWatchlist() {
-	document.getElementById('container-footer').style.display = 'none';
-	getWatchlistMovies(renderFilms, await getProfile());
-}
-
-async function getHome() {
+function getHome() {
 	getHomeScreen(renderFilms);
 }
 
-async function createGenresShow() {
-	await getGenre(filmCategory);
+function createGenresShow() {
 	const genreShow = document.createElement('div');
 	genreShow.setAttribute('class', 'container-genre');
-	let genres = '';
-	let theGenre = movieGenre;
-	let genreCategory = 'movie';
-	if (location.pathname.includes('tv')) {
-		theGenre = tvGenre;
-		genreCategory = 'tv';
-	}
-	theGenre.forEach((genre) => {
-		const genreName = genre.name.toLowerCase();
-		if (
-			genreName == 'documentary' ||
-			genreName == 'science fiction' ||
-			genreName == 'tv movie' ||
-			genreName == 'war & politics' ||
-			genreName == 'western'
-		) {
-			return;
-		}
+	document.querySelector('.container-movies').appendChild(genreShow);
+	getGenre(filmCategory).then((filmGenre) => {
+		let genres = '';
+		filmGenre.forEach((genre) => {
+			const genreName = genre.name.toLowerCase();
+			if (
+				genreName == 'documentary' ||
+				genreName == 'science fiction' ||
+				genreName == 'tv movie' ||
+				genreName == 'war & politics' ||
+				genreName == 'western'
+			) {
+				return;
+			}
 
-		genres += `<a class="nodecor-link" href="/${genreCategory}?genre=${
-			genre.id
-		}"><div class="genre-label-item" style="background-image: url('/images/genre/${
-			genreCategory + '/' + genreName.replaceAll(' ', '-') + '.jpg'
-		}');"><span class="container-genre-text">${genre.name}</span></div></a>`;
+			genres += `<a class="nodecor-link" href="/${filmCategory}?genre=${
+				genre.id
+			}"><div class="genre-label-item" style="background-image: url('/images/genre/${
+				filmCategory + '/' + genreName.replaceAll(' ', '-') + '.jpg'
+			}');"><span class="container-genre-text">${genre.name}</span></div></a>`;
+		});
+		genreShow.innerHTML = `<h3>Genres</h3><div class="genre-label">${genres}</div>`;
 	});
-	genreShow.innerHTML = `<h3>Genres</h3><div class="genre-label">${genres}</div>`;
-	return genreShow;
 }
 
-async function getFilms() {
+function getFilms() {
 	const urlParams = new URLSearchParams(location.search);
 	page = urlParams.get('p') || 1;
 	const genre = urlParams.get('genre');
@@ -263,31 +268,15 @@ async function getFilms() {
 		searchCategory = document.createElement('div');
 		searchCategory.setAttribute('class', 'search-filter');
 		searchCategory.innerHTML = `<button id="search-movie" class="btn-filter">Movies</button> <button id="search-tv" class="btn-filter">TV Shows</button>`;
-		await getSearchFilm(renderFilms, filmCategory, theValue, page);
-
-		const activeButton = document.getElementById('search-' + filmCategory);
-		activeButton.style.backgroundColor = '#010101';
-		activeButton.disabled = true;
-		document.getElementById('search-movie').onclick = function (e) {
-			e.preventDefault();
-			searchFilms('movie', query);
-		};
-		document.getElementById('search-tv').onclick = function (e) {
-			e.preventDefault();
-			searchFilms('tv', query);
-		};
+		getSearchFilm(renderFilms, filmCategory, theValue, page);
 	} else {
 		if (genre) {
-			await getFilmsByGenre(
-				renderFilms,
-				filmCategory,
-				genre,
-				await getGenreName(genre),
-				page
-			);
+			getGenreName(genre, (value) => {
+				getFilmsByGenre(renderFilms, filmCategory, genre, value, page);
+			});
 		} else {
 			popular = true;
-			await getPopularFilms(renderFilms, filmCategory, page);
+			getPopularFilms(renderFilms, filmCategory, page);
 		}
 	}
 }

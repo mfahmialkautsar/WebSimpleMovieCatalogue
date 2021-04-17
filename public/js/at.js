@@ -32,13 +32,14 @@ const getAPIKey = () => {
 };
 
 async function requestFilm(url, onComplete, onError) {
-	await fetch(url)
+	fetch(await url)
 		.then((response) => response.json())
 		.then(onComplete)
+		.then()
 		.catch(onError);
 }
 
-function postFilm(url, body, onComplete, onError) {
+async function postFilm(url, body, onComplete, onError) {
 	fetch(url, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
@@ -46,6 +47,7 @@ function postFilm(url, body, onComplete, onError) {
 	})
 		.then((response) => response.json())
 		.then(onComplete)
+		.then()
 		.catch(onError);
 }
 
@@ -57,8 +59,8 @@ async function generateDetailFilmUrl(category, id) {
 	return await generateFilmUrl(`${category}/${id}`);
 }
 
-async function generateFilmListUrl(path, page) {
-	return (await generateFilmUrl(`${path}`)) + `&page=${page}`;
+async function generateFilmListUrl(path, page, addition = '') {
+	return (await generateFilmUrl(`${path}`)) + `&page=${page}${addition}`;
 }
 
 async function generateFilmsByGenreUrl(category, genre_id, page) {
@@ -73,19 +75,19 @@ async function generateListGenreUrl(category) {
 	return await generateFilmUrl(`genre/${category}/list`);
 }
 
-async function getPopularFilms(renderFilms, category, page, i = 0) {
+function getPopularFilms(renderFilms, category, page, i = 0) {
 	let topTitle;
 	if (category == 'movie') {
 		topTitle = 'Movies';
 	} else {
 		topTitle = 'TV Shows';
 	}
-	const url = await generateFilmListUrl(`${category}/popular`, page);
-	const render = await renderFilms.bind({ title: `Popular ${topTitle}` }, i);
+	const url = generateFilmListUrl(`${category}/popular`, page);
+	const render = renderFilms.bind({ title: `Popular ${topTitle}` }, i);
 	requestFilm(url, render, handleGeneralError);
 }
 
-async function getUpcomingFilms(render, page = 1) {
+function getUpcomingFilms(render, page = 1) {
 	const category = 'movie';
 	let topTitle;
 	if (category == 'movie') {
@@ -93,45 +95,40 @@ async function getUpcomingFilms(render, page = 1) {
 	} else {
 		topTitle = 'TV Shows';
 	}
-	const url = await generateFilmListUrl(`${category}/upcoming`, page);
-	requestFilm(url, render.bind(), 'handleGeneralError');
+	const url = generateFilmListUrl(`${category}/upcoming`, page);
+	requestFilm(url, render.bind(topTitle), 'handleGeneralError');
 }
 
-function getWatchlistMovies(renderFilms, profile) {
+function getWatchlistMovies(renderFilms, lineUId) {
 	const url = `/getWLs`;
 	const body = {
-		lineUId: profile.userId,
+		lineUId: lineUId,
 	};
-	(async () => {
-		const render = await renderFilms.bind({ title: 'Watchlist' }, 0);
-		postFilm(url, body, render, handleGeneralError);
-	})();
+	const render = renderFilms.bind({ title: 'Watchlist' }, 0);
+	postFilm(url, body, render, handleGeneralError);
 }
 
-async function getSearchFilm(renderFilms, category, value, page) {
-	const url =
-		(await generateFilmListUrl(`search/${category}`, page)) + '&query=' + value;
-	const render = await renderFilms.bind({ title: 'Showing: ' + value }, 0);
+function getSearchFilm(renderFilms, category, value, page) {
+	const url = generateFilmListUrl(
+		`search/${category}`,
+		page,
+		'&query=' + value
+	);
+	const render = renderFilms.bind({ title: 'Showing: ' + value }, 0);
 	const inputId = document.getElementById('movie-input');
 	inputId.value = value;
-	await requestFilm(url, render, handleGeneralError);
-}
-
-async function getFilmsByGenre(
-	renderFilms,
-	category,
-	genre_id,
-	genre_name,
-	page
-) {
-	const url = await generateFilmsByGenreUrl(category, genre_id, page);
-	const render = await renderFilms.bind({ title: genre_name }, 0);
 	requestFilm(url, render, handleGeneralError);
 }
 
-async function getHomeScreen(renderFilms) {
-	getPopularFilms(await renderFilms, 'movie', 1, 0);
-	getPopularFilms(await renderFilms, 'tv', 1, 1);
+function getFilmsByGenre(renderFilms, category, genre_id, genre_name, page) {
+	const url = generateFilmsByGenreUrl(category, genre_id, page);
+	const render = renderFilms.bind({ title: genre_name }, 0);
+	requestFilm(url, render, handleGeneralError);
+}
+
+function getHomeScreen(renderFilms) {
+	getPopularFilms(renderFilms, 'movie', 1, 0);
+	getPopularFilms(renderFilms, 'tv', 1, 1);
 }
 
 function handleGeneralError(error) {
@@ -147,7 +144,6 @@ function toTitleCase(str) {
 }
 
 export {
-	postFilm,
 	generateDetailFilmUrl,
 	generateListGenreUrl,
 	getPopularFilms,

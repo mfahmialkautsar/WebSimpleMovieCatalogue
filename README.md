@@ -2,7 +2,7 @@
 Basically the same as my android [The Movie Catalogue](https://github.com/mfahmialkautsar/TheMovieCatalogue), but you can run this on any browser you have on your phone and computer.
 And if you login with your [LINE Messenger](https://line.me) account, you can get Watchlist feature. This can be happened with the help of LIFF ([LINE Front-end Framework](https://developers.line.biz/console)).
 
-Just a try and error app. No framework. Clean Node.js and some small packages only.
+Just a try and error app. No framework. Clean Node.js and a pg package only.
 
 ## Screenshot
 <img src="./screenshots/computer_films.png" title="Films (Computer)">&nbsp;
