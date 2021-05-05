@@ -14,8 +14,8 @@ function getDetailMovie() {
 	const reqArray = location.pathname.replace(/\/$/, '').split('/');
 	movieId = reqArray[reqArray.length - 1];
 
-	generateDetailFilmUrl(filmCategory, movieId)
-		.then((res) => fetch(res + '&append_to_response=credits,videos'))
+	
+		fetch(generateDetailFilmUrl(filmCategory, movieId) + '&append_to_response=credits,videos')
 		.then((response) => response.json())
 		.then((film) => {
 			if (film.status_code) {

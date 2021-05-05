@@ -2,12 +2,12 @@
   "name": "moviecatalogue",
   "version": "1.0.0",
   "description": "A LIFF Movie Catalogue",
-  "main": "index.js",
+  "main": "src/index.js",
   "dependencies": {
     "pg": "^8.4.1"
   },
   "scripts": {
-    "start": "node index.js",
+    "start": "node src/index.js",
     "local": "npm run env npm start",
     "watch": "npm run env nodemon",
     "env": "",

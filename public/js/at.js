@@ -1,7 +1,5 @@
-const MOVIE_DB_ENDPOINT = 'https://api.themoviedb.org';
 const MOVIE_DB_IMAGE_ENDPOINT = 'https://image.tmdb.org/t/p/w500';
 const MOVIE_DB_IMAGE_ENDPOINT_ORIGINAL = 'https://image.tmdb.org/t/p/original';
-let MOVIE_DB_API;
 
 function getImagePath(path, type, original = false) {
 	if (!path) {
@@ -18,28 +16,15 @@ function getImagePath(path, type, original = false) {
 	return MOVIE_DB_IMAGE_ENDPOINT + path;
 }
 
-const getAPIKey = () => {
-	if (!MOVIE_DB_API) {
-		return new Promise((resolve, _) => {
-			fetch('/getapik', {
-				method: 'POST',
-			})
-				.then((response) => (MOVIE_DB_API = response.text()))
-				.then(resolve);
-		});
-	}
-	return MOVIE_DB_API;
-};
-
-async function requestFilm(url, onComplete, onError) {
-	fetch(await url)
+function requestFilm(url, onComplete, onError) {
+	fetch(url)
 		.then((response) => response.json())
 		.then(onComplete)
 		.then()
 		.catch(onError);
 }
 
-async function postFilm(url, body, onComplete, onError) {
+function postFilm(url, body, onComplete, onError) {
 	fetch(url, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
@@ -51,28 +36,28 @@ async function postFilm(url, body, onComplete, onError) {
 		.catch(onError);
 }
 
-async function generateFilmUrl(content) {
-	return `${MOVIE_DB_ENDPOINT}/3/${content}?api_key=${await getAPIKey()}`;
+function generateFilmUrl(content) {
+	return `/tmdb/${content}`;
 }
 
-async function generateDetailFilmUrl(category, id) {
-	return await generateFilmUrl(`${category}/${id}`);
+function generateDetailFilmUrl(category, id) {
+	return generateFilmUrl(`${category}/${id}`);
 }
 
-async function generateFilmListUrl(path, page, addition = '') {
-	return (await generateFilmUrl(`${path}`)) + `&page=${page}${addition}`;
+function generateFilmListUrl(path, page, addition = '') {
+	return generateFilmUrl(`${path}`) + `&page=${page}${addition}`;
 }
 
-async function generateFilmsByGenreUrl(category, genre_id, page) {
+function generateFilmsByGenreUrl(category, genre_id, page) {
 	return (
-		(await generateFilmListUrl(`${category}/popular`, page)) +
+		(generateFilmListUrl(`${category}/popular`, page)) +
 		'&with_genres=' +
 		genre_id
 	);
 }
 
-async function generateListGenreUrl(category) {
-	return await generateFilmUrl(`genre/${category}/list`);
+function generateListGenreUrl(category) {
+	return generateFilmUrl(`genre/${category}/list`);
 }
 
 function getPopularFilms(renderFilms, category, page, i = 0) {

@@ -194,6 +194,8 @@ function searchButton() {
 	const searchButton = document.querySelector('#search');
 	const searchSubmit = document.querySelector('#search-submit');
 	const searchInput = document.querySelector('#movie-input');
+	hamburger();
+	
 	searchButton.onclick = function () {
 		if (searchBox.classList.contains('mobile')) {
 			searchBox.classList.remove('mobile');
@@ -213,17 +215,17 @@ function searchButton() {
 			window.location = `/${filmCategory}?q=` + theValue;
 		}
 	};
-}
 
-function hamburger() {
-	document.getElementById('hamburger').onclick = () => {
-		if (!supernavContainer.classList.contains('mobile')) {
-			supernavContainer.className += ' mobile';
-			searchBox.classList.remove('mobile');
-		} else {
-			supernavContainer.classList.remove('mobile');
-		}
-	};
+	function hamburger() {
+		document.getElementById('hamburger').onclick = () => {
+			if (!supernavContainer.classList.contains('mobile')) {
+				supernavContainer.className += ' mobile';
+				searchBox.classList.remove('mobile');
+			} else {
+				supernavContainer.classList.remove('mobile');
+			}
+		};
+	}
 }
 
 function init() {
@@ -232,7 +234,6 @@ function init() {
 	addScroll();
 	createHeader();
 	searchButton();
-	hamburger();
 }
 
 export {

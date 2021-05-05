@@ -22,13 +22,13 @@ function startLiff() {
 				myLiffId = jsonResponse.id;
 				initializeLiffOrDie(myLiffId);
 			})
-			.then(() => {
-				if (location.search.match(/\/?\?code=.+/)) {
-					alert(
-						"If you've just tried to log in and haven't logged in yet (it's a bug from LINE), just log in again.\nElse, ignore this message."
-					);
-				}
-			})
+			// .then(() => {
+			// 	if (location.search.match(/\/?\?code=.+/)) {
+			// 		alert(
+			// 			"If you've just tried to log in and haven't logged in yet (it's a bug from LINE), just log in again.\nElse, ignore this message."
+			// 		);
+			// 	}
+			// })
 			.catch(function (error) {
 				liffStarted = false;
 			});
@@ -145,14 +145,9 @@ function setupProfile() {
 async function getProfile() {
 	try {
 		if (!liffProfile) {
-			if (!liffStarted) {
-				startLiff();
-				await sleep(500);
-				return getProfile();
-			} else {
-				await sleep(500);
-				return getProfile();
-			}
+			if (!liffStarted) startLiff();
+			await sleep(500);
+			return getProfile();
 		}
 		return liffProfile;
 	} catch (error) {}
