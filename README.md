@@ -21,12 +21,14 @@ https://liff.line.me/1653723806-zZml2obV (or you can access https://liffmovie.he
 
 ### Configuration
 - Run `npm i`
-- `DATABASE_URL` at `db.js`: PostgreSQL database url
-- `MOVIE_DB_API` at `web.js`: Your TMDB API key
-- `LIFF_ID` at `web.js`: From LINE Developers
 - Endpoint URL at LIFF LINE Developers: Your domain
 
-### Technologies
+### Environment
+- `DATABASE_URL`: PostgreSQL database url
+- `MOVIE_DB_API`: Your TMDB API key
+- `LIFF_ID`: From LINE Developers
+
+### Build With
 - [TMDB](https://developers.themoviedb.org/3)
 - [LINE Front-end Framework SDK](https://developers.line.biz/en/docs/liff/)
 - [Node.js](https://nodejs.org/en/docs/)
