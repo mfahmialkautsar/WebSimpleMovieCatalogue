@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-function page(req, res) {
+function file(req, res) {
   let filePath = req.url.replace(/^\/+/, '').replace(/\/+$/, '');
 
   const reqArray = filePath.split('/');
@@ -83,4 +83,4 @@ function page(req, res) {
   });
 }
 
-module.exports = page;
+module.exports = file;

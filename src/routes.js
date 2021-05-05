@@ -1,5 +1,5 @@
 const {getLineId, getTmdb} = require('./controllers/data');
-const page = require('./controllers/page');
+const file = require('./controllers/file');
 const {getById, getAll, add} = require('./controllers/watchlist');
 
 async function routes(req, res) {
@@ -13,16 +13,13 @@ async function routes(req, res) {
           getTmdb(req, res);
           break;
         default:
-          page(req, res);
+          file(req, res);
           break;
       }
 
       break;
     case 'POST':
       switch (req.url) {
-        case '/getapik':
-          res.end(MOVIE_DB_API);
-          break;
         case '/addWL':
           add(req, res);
           break;
